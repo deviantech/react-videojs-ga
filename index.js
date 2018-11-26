@@ -1,11 +1,12 @@
-const initPlugin = function(videojs) {
+const installVideoAnalyticsPlugin = function(videojs) {
   videojs.registerPlugin('ga', function(options) {
     // this loads options from the data-setup attribute of the video tag
     let seekEnd;
     if (options == null) { options = {}; }
     let dataSetupOptions = {};
-    if (this.options()["data-setup"]) {
-      const parsedOptions = JSON.parse(this.options()["data-setup"]);
+
+    if (this.options_["data-setup"]) {
+      const parsedOptions = JSON.parse(this.options_["data-setup"]);
       if (parsedOptions.ga) { dataSetupOptions = parsedOptions.ga; }
     }
 
@@ -116,7 +117,8 @@ const initPlugin = function(videojs) {
     };
 
     var sendbeacon = function( action, nonInteraction, value ) {
-      // console.log action, " ", nonInteraction, " ", value
+      console.log('react-videojs-ga: sending beacon for: ', action)
+
       if (window.ga) {
         ga('send', 'event', {
           'eventCategory'   : eventCategory,
@@ -124,8 +126,7 @@ const initPlugin = function(videojs) {
           'eventLabel'      : eventLabel,
           'eventValue'      : value,
           'nonInteraction'  : nonInteraction
-        }
-        );
+        });
       } else if (window._gaq) {
         _gaq.push(['_trackEvent', eventCategory, action, eventLabel, value, nonInteraction]);
       } else if (options.debug) {
@@ -149,4 +150,4 @@ const initPlugin = function(videojs) {
   });
 }
 
-export default initPlugin
+export default installVideoAnalyticsPlugin
