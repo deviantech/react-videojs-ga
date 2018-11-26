@@ -117,7 +117,7 @@ const installVideoAnalyticsPlugin = function(videojs) {
     };
 
     var sendbeacon = function( action, nonInteraction, value ) {
-      console.log('react-videojs-ga: sending beacon for: ', action)
+      // console.log('react-videojs-ga: sending beacon for: ', action)
 
       if (window.ga) {
         ga('send', 'event', {
